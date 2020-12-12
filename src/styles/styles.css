@@ -1,0 +1,34 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  text-align: center;
+}
+
+.gallery, .stats, .stats-item {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.gallery {
+  flex-wrap: wrap;
+}
+
+.photo-card {
+  width: 600px;
+  min-height: 400px;
+}
