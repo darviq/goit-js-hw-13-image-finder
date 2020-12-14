@@ -4,34 +4,25 @@ import debounce from 'lodash.debounce';
 import { refs } from './js/refs.js';
 import findPictures from './js/apiService.js';
 import pictureCardsTemplate from './templates/pictureCardsTemplate.hbs'
-import { searchOptions } from './js/searchOptions.js'
+import { searchOptions, supportData } from './js/data.js'
 
-const valueHandler = () => {
+const valueHandler = async () => {
     if (refs.input.value.length > 0) {
         searchOptions.query = refs.input.value;
         searchOptions.pageNumber = 1;
-        findPictures()
-            .then(data => pictureCardsTemplate(data))
-            .then(templateString => {
-                refs.gallery.innerHTML = templateString;
-                refs.findMore.classList.remove('hidden');
-            });
+        supportData.renderData = await findPictures();
+        refs.gallery.innerHTML = pictureCardsTemplate(supportData.renderData);
+        refs.findMore.classList.remove('hidden');
     }
 }
 
-const addMore = () => {
+const addMore = async () => {
     if (refs.input.value.length > 0) {
         searchOptions.pageNumber += 1;
-        findPictures()
-            .then(data => pictureCardsTemplate(data))
-            .then(templateString => {
-                const height = document.documentElement.offsetHeight;
-                refs.gallery.insertAdjacentHTML('beforeend', templateString);
-                scrollTo({
-                    top: height - 90,
-                    behavior: 'smooth',
-                });
-            });
+        supportData.renderData = await findPictures();
+        supportData.docHeight = document.documentElement.offsetHeight;
+        refs.gallery.insertAdjacentHTML('beforeend', pictureCardsTemplate(supportData.renderData));
+        scrollTo({top: supportData.docHeight - 90, behavior: 'smooth'});
     }
 }
 
