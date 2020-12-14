@@ -12,7 +12,10 @@ const valueHandler = () => {
         searchOptions.pageNumber = 1;
         findPictures()
             .then(data => pictureCardsTemplate(data))
-            .then(templateString => refs.gallery.innerHTML = templateString);
+            .then(templateString => {
+                refs.gallery.innerHTML = templateString;
+                refs.findMore.classList.remove('hidden');
+            });
     }
 }
 
@@ -25,7 +28,7 @@ const addMore = () => {
                 const height = document.documentElement.offsetHeight;
                 refs.gallery.insertAdjacentHTML('beforeend', templateString);
                 scrollTo({
-                    top: height - 50,
+                    top: height - 90,
                     behavior: 'smooth',
                 });
             });
