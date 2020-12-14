@@ -6,7 +6,8 @@ import findPictures from './js/apiService.js';
 import pictureCardsTemplate from './templates/pictureCardsTemplate.hbs'
 import { searchOptions, supportData } from './js/data.js'
 
-const valueHandler = async () => {
+const valueHandler = async (e) => {
+    e.preventDefault();
     if (refs.input.value.length > 0) {
         searchOptions.query = refs.input.value;
         searchOptions.pageNumber = 1;
@@ -26,5 +27,6 @@ const addMore = async () => {
     }
 }
 
+refs.form.addEventListener('submit', e => e.preventDefault());
 refs.input.addEventListener('input', debounce(valueHandler, 1000));
 refs.findMore.addEventListener('click', addMore);
